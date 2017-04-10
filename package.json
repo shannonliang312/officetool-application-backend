@@ -1,0 +1,22 @@
+{
+  "name": "officetool-application-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shannonliang312/officetool-application-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shannonliang312/officetool-application-backend/issues"
+  },
+  "homepage": "https://github.com/shannonliang312/officetool-application-backend#readme",
+  "dependencies": {
+    "mongoose": "^4.9.4"
+  }
+}
