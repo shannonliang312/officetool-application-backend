@@ -1,22 +1,6 @@
 {
   "name": "admin",
-  "psw": "admin",
-  "role": "admin"
-} {
-  "name": "shannonliang",
-  "psw": "12345678",
-  "role": "normal",
-  "birthday": {
-    "$date": 639849600000
-  },
-  "assets": {
-    "office-tools": {
-      "applied": false,
-      "data": []
-    },
-    "birthday-gift": {
-      "applied": false,
-      "gift": ""
-    }
-  }
-}
+  "psw": "$2a$04$7gbekFRPe.HIC/Gg9uF1Je/LTLZGXeLcYgsX86Wagh/GMX9JnRf96",
+  "role": "admin",
+  "assets": {}
+} 
