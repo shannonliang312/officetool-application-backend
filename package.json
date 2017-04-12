@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/shannonliang312/officetool-application-backend#readme",
   "dependencies": {
-    "mongoose": "^4.9.4"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^7.3.0",
+    "mongoose": "^4.9.4",
+    "morgan": "^1.8.1"
   }
 }
