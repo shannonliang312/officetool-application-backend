@@ -1,5 +1,6 @@
 {
   "name": "admin",
+  "displayName": "管理员",
   "psw": "$2a$04$7gbekFRPe.HIC/Gg9uF1Je/LTLZGXeLcYgsX86Wagh/GMX9JnRf96",
   "role": "admin",
   "assets": {}
