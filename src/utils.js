@@ -5,6 +5,7 @@ let config = require('./config');
 
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
+  _id: String,
   name: String,
   psw: String,
   role: String
@@ -12,13 +13,15 @@ let userSchema = new Schema({
 
 let user = mongoose.model('users', userSchema);
 
-exports.authenticate = function (req, res) {
+module.exports.authenticate = function (req, res) {
   let name = req.body.name;
   let psw = req.body.psw;
 
   user.findOne({
     name: name
   }, (err, doc) => {
+    let docObj = {};
+
     if (err) {
       throw err;
     }
@@ -29,7 +32,8 @@ exports.authenticate = function (req, res) {
         message: "认证失败,用户未找到",
       });
     } else {
-      let verify_psw = bcrypt.compareSync(psw, doc.psw);
+      docObj = doc.toObject();
+      let verify_psw = bcrypt.compareSync(psw, docObj.psw);
       
       if (!verify_psw) {
         res.status(401).json({
@@ -38,17 +42,23 @@ exports.authenticate = function (req, res) {
         });
       } else {
         let payload = {
-          id: doc._id,
-          role: doc.role
+          id: docObj._id,
+          role: docObj.role
         };
 
-        let token = jwt.sign(payload, config.secret, {expiresIn: "10s"});
-        
-        res.json({
+        delete docObj.psw;
+        if(docObj.assets) {
+          delete docObj.assets;
+        }
+
+        let token = jwt.sign(payload, config.secret, {expiresIn: "10m"});
+        let resData = {
           success: true,
-          role: doc.role,
-          token: token
-        });
+          token: token,
+          payload: docObj
+        };
+
+        res.json(resData);
       }
       
     }
