@@ -51,7 +51,7 @@ module.exports.authenticate = function (req, res) {
           delete docObj.assets;
         }
 
-        let token = jwt.sign(payload, config.secret, {expiresIn: "10m"});
+        let token = jwt.sign(payload, config.secret, {expiresIn: "1h"});
         let resData = {
           success: true,
           token: token,
