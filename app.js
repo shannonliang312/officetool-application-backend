@@ -27,7 +27,7 @@ db.once('open', function () {
   console.log('connected.');
 });
 
-// 路由中间件，拦截所有请求，验证token
+// 路由中间件，拦截所有请求，验证token 
 apiRouter.use((req, res, next) => {
   let url = req.url;
   if (url === "/login") {
@@ -74,6 +74,8 @@ apiRouter.use((req, res, next) => {
 
 apiRouter.post('/login', utils.authenticate);
 apiRouter.get('/admin/office-tools', admin.getOfficeTools);
+apiRouter.put('/admin/office-tools', admin.updateOfficeTools);
+
 
 app.use('/api', apiRouter);
 
