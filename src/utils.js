@@ -11,13 +11,16 @@ let userSchema = new Schema({
   role: String
 });
 
-let user = mongoose.model('users', userSchema);
+let User = mongoose.model('users', userSchema);
 
 module.exports.authenticate = function (req, res) {
   let name = req.body.name;
   let psw = req.body.psw;
+  // User.find((err, docs) => {
+  //   console.log(docs);
+  // })
 
-  user.findOne({
+  User.findOne({
     name: name
   }, (err, doc) => {
     let docObj = {};
