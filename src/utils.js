@@ -32,7 +32,8 @@ module.exports.authenticate = function (req, res) {
     if (!doc) {
       res.status(401).json({
         success: false,
-        message: "认证失败,用户未找到",
+        errName: "错误！",
+        errMessage: "认证失败,用户未找到",
       });
     } else {
       docObj = doc.toObject();
@@ -41,7 +42,8 @@ module.exports.authenticate = function (req, res) {
       if (!verify_psw) {
         res.status(401).json({
           success: false,
-          message: "认证失败,密码错误",
+          errName: "错误",
+          errMessage: "认证失败,密码错误",
         });
       } else {
         let payload = {

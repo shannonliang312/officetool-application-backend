@@ -73,8 +73,10 @@ apiRouter.use((req, res, next) => {
 });
 
 apiRouter.post('/login', utils.authenticate);
-apiRouter.get('/admin/office-tools', admin.getOfficeTools);
-apiRouter.put('/admin/office-tools', admin.updateOfficeTools);
+apiRouter.get('/admin/office-tool', admin.getOfficeTools);
+apiRouter.put('/admin/office-tool', admin.updateOfficeTool);
+apiRouter.post('/admin/office-tool', admin.addOfficeTool);
+apiRouter.delete('/admin/office-tool', admin.deleteOfficeTool);
 
 
 app.use('/api', apiRouter);

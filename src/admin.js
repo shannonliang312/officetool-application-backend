@@ -11,24 +11,28 @@ let toolsSchema = new Schema({
   price: Number
 });
 
-let tools = mongoose.model('assets', toolsSchema);
+let Tool = mongoose.model('assets', toolsSchema);
 
 module.exports.getOfficeTools = function(req, res) {
-  tools.find((err, docs) => {
+  Tool.find((err, docs) => {
     res.json(docs);
   })
 };
 
-module.exports.updateOfficeTools = function(req, res) {
+module.exports.updateOfficeTool = function(req, res) {
   // console.log(req.body);
   let data = req.body; 
 
-  tools.findOneAndUpdate({_id: mongoose.Types.ObjectId(data._id)}, {price: data.price}, (err, doc) => {
+  /* 如果Schema中的_id类型定义为String，则此处以_id为条件的查找将会失败
+   * 下文addOfficeTool方法中，在保存doc时必须传入一个自定义的_id属性，否则将会报错
+   */
+  Tool.findOneAndUpdate({_id: mongoose.Types.ObjectId(data._id)}, {price: data.price}, (err, doc) => {
     if(err) {
       console.log(err);
       res.status(500).json({
         success: false,
-        message: err
+        errName: "错误！",
+        errMessage: err
       });
     } else {
       res.json({
@@ -39,3 +43,35 @@ module.exports.updateOfficeTools = function(req, res) {
     }
   });
 };
+
+module.exports.addOfficeTool = function(req, res) {
+  let newData = req.body; 
+  let newDoc = new Tool({
+    _id: mongoose.Types.ObjectId(),//手动定义_id
+    item: newData.item,
+    price: newData.price,
+    unit: newData.unit,
+    comment: newData.comment
+  });
+
+  newDoc.save((err, doc) => {
+    if(err) {
+      console.log(err);
+      res.status(500).json({success: false, errName: "错误！", errMessage: err});
+    } else {
+      res.json({success: true, message: "添加成功！"});
+    }
+  });  
+}
+
+module.exports.deleteOfficeTool = function(req, res) {
+  console.log(req.query);
+  let _id = req.query._id;
+  Tool.findOneAndRemove({_id: mongoose.Types.ObjectId(_id)}, (err, doc) => {
+    if(err) {
+      res.status(500).json({success: false, message: err});
+    } else {
+      res.json({success: true, message: "删除成功！"})
+    }
+  });
+}
