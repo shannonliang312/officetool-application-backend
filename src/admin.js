@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 let bcrypt = require('bcryptjs');
 let jwt = require('jsonwebtoken');
 let config = require('./config');
+let utils = require('./utils');
 
 let Schema = mongoose.Schema;
 let toolsSchema = new Schema({
@@ -17,8 +18,19 @@ let giftSchema = new Schema({
   comment: String
 });
 
+let userSchema = new Schema({
+  _id: Object,
+  name: String,
+  displayName: String,
+  psw: String,
+  email: String,
+  role: String,
+  birthday: Date
+});
+
 let Tool = mongoose.model('assets', toolsSchema);
-let Gift = mongoose.model('gifts', giftSchema);//collection名称最好为复数
+let Gift = mongoose.model('gifts', giftSchema);//collection名称最好为复数,mongoose会自动讲collection名称变为复数存储
+let User = mongoose.model('user', userSchema);//这里如果用users会报错，对名称复数的转化有待进一步研究
 
 module.exports.getOfficeTools = function(req, res) {
   Tool.find((err, docs) => {
@@ -140,6 +152,53 @@ module.exports.addGift = function(req, res) {
 module.exports.deleteGift = function(req, res) {
   let _id = req.query._id;
   Gift.findOneAndRemove({_id: mongoose.Types.ObjectId(_id)}, (err, doc) => {
+    if(err) {
+      res.status(500).json({success: false, errName: err.name, errMessage: err.message});
+    } else {
+      res.json({success: true, message: "删除成功！"})
+    }
+  });
+}
+
+module.exports.getUsers = function(req, res) {
+  User.find({role: "normal"}, (err, docs) => {
+    if(err) {
+      res.status(500).json({
+        success: false,
+        errName: err.name,
+        errMessage: err.message
+      });
+    } else {
+      res.json(docs);
+    }
+  })
+};
+
+module.exports.addUser = function(req, res) {
+  let newData = req.body; 
+  let newDoc = new User({
+    _id: mongoose.Types.ObjectId(),//手动定义_id
+    name: newData.name,
+    displayName: newData.displayName,
+    psw: utils.genHashPsw(newData.psw),
+    email: newData.email,
+    role: newData.role,
+    birthday: newData.birthday
+  });
+  console.log(req.body);
+  // res.json({a:123});
+  newDoc.save((err, doc) => {
+    if(err) {
+      res.status(500).json({success: false, errName: err.name, errMessage: err.message});
+    } else {
+      res.json({success: true, message: "添加成功！"});
+    }
+  }); 
+}
+
+module.exports.deleteUser = function(req, res) {
+  let _id = req.query._id;
+  User.findOneAndRemove({_id: mongoose.Types.ObjectId(_id)}, (err, doc) => {
     if(err) {
       res.status(500).json({success: false, errName: err.name, errMessage: err.message});
     } else {

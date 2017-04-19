@@ -72,15 +72,25 @@ apiRouter.use((req, res, next) => {
 
 });
 
+/* 登录 */
 apiRouter.post('/login', utils.authenticate);
+
+/* 办公用品管理接口 */
 apiRouter.get('/admin/office-tool', admin.getOfficeTools);
 apiRouter.put('/admin/office-tool', admin.updateOfficeTool);
 apiRouter.post('/admin/office-tool', admin.addOfficeTool);
 apiRouter.delete('/admin/office-tool', admin.deleteOfficeTool);
+
+/* 生日礼物管理接口 */
 apiRouter.get('/admin/birthday-gift', admin.getGifts);
 apiRouter.put('/admin/birthday-gift', admin.updateGift);
 apiRouter.post('/admin/birthday-gift', admin.addGift);
 apiRouter.delete('/admin/birthday-gift', admin.deleteGift);
+
+/* 用户管理接口 */
+apiRouter.get('/admin/user', admin.getUsers);
+apiRouter.post('/admin/user', admin.addUser);
+apiRouter.delete('/admin/user', admin.deleteUser);
 
 
 app.use('/api', apiRouter);
