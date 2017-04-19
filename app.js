@@ -77,6 +77,10 @@ apiRouter.get('/admin/office-tool', admin.getOfficeTools);
 apiRouter.put('/admin/office-tool', admin.updateOfficeTool);
 apiRouter.post('/admin/office-tool', admin.addOfficeTool);
 apiRouter.delete('/admin/office-tool', admin.deleteOfficeTool);
+apiRouter.get('/admin/birthday-gift', admin.getGifts);
+apiRouter.put('/admin/birthday-gift', admin.updateGift);
+apiRouter.post('/admin/birthday-gift', admin.addGift);
+apiRouter.delete('/admin/birthday-gift', admin.deleteGift);
 
 
 app.use('/api', apiRouter);
