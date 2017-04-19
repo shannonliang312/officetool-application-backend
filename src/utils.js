@@ -1,8 +1,7 @@
 let mongoose = require('mongoose');
-let bcrypt = require('bcryptjs');
 let jwt = require('jsonwebtoken');
 let config = require('./config');
-
+let bcrypt = require('bcryptjs');
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
   _id: String,
@@ -68,6 +67,9 @@ module.exports.authenticate = function (req, res) {
       
     }
   });
+}
 
-
+module.exports.genHashPsw = function(psw) {
+  let salt = bcrypt.genSaltSync(config.salt);
+  return bcrypt.hashSync(psw, salt);
 }
