@@ -91,6 +91,7 @@ apiRouter.delete('/admin/birthday-gift', admin.deleteGift);
 apiRouter.get('/admin/user', admin.getUsers);
 apiRouter.post('/admin/user', admin.addUser);
 apiRouter.delete('/admin/user', admin.deleteUser);
+apiRouter.put('/admin/user', admin.updateUser);
 
 
 app.use('/api', apiRouter);

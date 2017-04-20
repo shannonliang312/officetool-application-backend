@@ -196,6 +196,29 @@ module.exports.addUser = function(req, res) {
   }); 
 }
 
+module.exports.updateUser  = function(req, res) {
+  let data = req.body;
+  let _id = data._id; 
+
+  delete data._id;
+
+  User.findOneAndUpdate({_id: mongoose.Types.ObjectId(_id)}, data, {new: true}, (err, doc) => { //new: true, 表示返回的doc是update后的数据，否则为原始数据
+    if(err) {
+      res.status(500).json({
+        success: false,
+        errName: err.name,
+        errMessage: err.message
+      });
+    } else {
+      res.json({
+        success: true, 
+        message: "修改成功！",
+        payload: doc
+      });
+    }
+  });
+}
+
 module.exports.deleteUser = function(req, res) {
   let _id = req.query._id;
   User.findOneAndRemove({_id: mongoose.Types.ObjectId(_id)}, (err, doc) => {
