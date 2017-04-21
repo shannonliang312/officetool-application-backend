@@ -267,7 +267,49 @@ module.exports.checkNameRepetition = function(req, res) {
       }
     });
   }
-  
-  
-  
+}
+
+module.exports.getAdminInfo = function (req, res) {
+  User.findOne({role: "admin"}, (err, doc) => {
+    if(err) {
+      return res.status(500).json({
+        success: false,
+        errName: err.name,
+        errMessage: err.message
+      });
+    } else {
+      if(!doc) {
+        return res.status(500).json({
+          success: false,
+          errName: "错误",
+          errMessage: "admin未找到！"
+        });
+      } else {
+        let resData = JSON.parse(JSON.stringify(doc));
+        delete resData.psw;
+        res.json(resData);
+      }
+    }
+  })
+}
+
+module.exports.updateAdminInfo = function(req, res) {
+  // console.log(req.body);
+  let newPsw = utils.genHashPsw(req.body.psw);
+  let newEmail = req.body.email;
+  let _id = req.body._id;
+
+  User.findOneAndUpdate({_id: mongoose.Types.ObjectId(_id)}, {psw: newPsw, email: newEmail}, {new: true}, (err, doc) => {
+    if(err) {
+      res.status(500).json({
+        success: false,
+        errName: err.name,
+        errMessage: err.message
+      });
+    } else {
+      res.json({
+        success: true
+      })
+    }
+  });
 }

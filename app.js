@@ -94,6 +94,12 @@ apiRouter.post('/admin/user', admin.addUser);
 apiRouter.delete('/admin/user', admin.deleteUser);
 apiRouter.put('/admin/user', admin.updateUser);
 
+/* 获取管理员信息 */
+apiRouter.get('/admin/info', admin.getAdminInfo);
+apiRouter.put('/admin/info', admin.updateAdminInfo);
+
+
+
 
 app.use('/api', apiRouter);
 
