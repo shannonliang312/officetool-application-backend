@@ -229,3 +229,45 @@ module.exports.deleteUser = function(req, res) {
     }
   });
 }
+
+module.exports.checkNameRepetition = function(req, res) {
+  let name = req.query.name;
+  let type = req.query.type;
+
+  if(type == "name") {
+    User.find({ name: name }, (err, docs) => {
+      if(err) {
+        res.status(500).json({
+          success: false,
+          errName: err.name,
+          errMessage: err.message
+        });
+      } else {
+        if(docs.length == 0) {
+          res.json({repetition: false});
+        } else {
+          res.json({repetition: true});
+        }
+      }
+    });
+  } else {
+    User.find({ displayName: name }, (err, docs) => {
+      if(err) {
+        res.status(500).json({
+          success: false,
+          errName: err.name,
+          errMessage: err.message
+        });
+      } else {
+        if(docs.length == 0) {
+          res.json({repetition: false});
+        } else {
+          res.json({repetition: true});
+        }
+      }
+    });
+  }
+  
+  
+  
+}

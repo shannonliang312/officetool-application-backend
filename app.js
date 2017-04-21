@@ -89,6 +89,7 @@ apiRouter.delete('/admin/birthday-gift', admin.deleteGift);
 
 /* 用户管理接口 */
 apiRouter.get('/admin/user', admin.getUsers);
+apiRouter.get('/admin/name-repetition', admin.checkNameRepetition);
 apiRouter.post('/admin/user', admin.addUser);
 apiRouter.delete('/admin/user', admin.deleteUser);
 apiRouter.put('/admin/user', admin.updateUser);
